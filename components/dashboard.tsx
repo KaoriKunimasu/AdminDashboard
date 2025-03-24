@@ -6,9 +6,9 @@ import EngagementRate from "@/components/EngagementRate"
 import ActiveUsers from "@/components/active-users"
 import UserAcquisition from "./user-acquisition"
 import UserSegmentation from "@/components/user-segmentation"
-import SalesMapping from "@/components/sales-mapping"
 import DeviceUsers from "./device-users"
 import MostViewedPages from "@/components/most-viewed-pages"
+import GeoUsers from "./geo-users"
 // import RevenueInsights from "@/components/revenue-insights" // Comment out or remove
 
 export default function Dashboard() {
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
             <div className="grid md:grid-cols-3 gap-6">
               <UserSegmentation />
-              <SalesMapping />
+              <GeoUsers />
               <DeviceUsers />
             </div>
           </div>
