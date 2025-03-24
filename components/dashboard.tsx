@@ -4,7 +4,7 @@ import Header from "@/components/header"
 import TodaySales from "@/components/today-sales"
 import EngagementRate from "@/components/EngagementRate"
 import ActiveUsers from "@/components/active-users"
-import PlanDistribution from "@/components/plan-distribution"
+import UserAcquisition from "./user-acquisition"
 import UserSegmentation from "@/components/user-segmentation"
 import SalesMapping from "@/components/sales-mapping"
 import VolumeVsService from "@/components/volume-vs-service"
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <ActiveUsers />
-              <PlanDistribution />
+              <UserAcquisition />
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
