@@ -33,8 +33,10 @@ export default function Dashboard() {
               <DeviceUsers />
             </div>
 
-            {/* MostViewedPages at the bottom (full width) */}
-            <MostViewedPages />
+            {/* MostViewedPages at the bottom (60% width) */}
+            <div className="w-full md:w-[60%] mx-auto">
+              <MostViewedPages />
+            </div>
           </div>
         </main>
       </div>
