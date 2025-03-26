@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface RevenueData {
   month: string;
@@ -17,17 +17,62 @@ interface HoveredPoint extends RevenueData {
 export default function RevenueInsights() {
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
   const [hoveredPoint, setHoveredPoint] = useState<HoveredPoint | null>(null);
+  const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  const revenueData: RevenueData[] = [
-    { month: "Jan", free: 1000, business: 2000, custom: 3000 },
-    { month: "Feb", free: 1200, business: 2200, custom: 3200 },
-    { month: "Mar", free: 1100, business: 2400, custom: 3400 },
-    { month: "Apr", free: 1300, business: 2600, custom: 3600 },
-    { month: "May", free: 1400, business: 2800, custom: 3800 },
-    { month: "Jun", free: 1600, business: 3000, custom: 4000 },
-  ];
+  // Set isClient to true when component mounts (client-side only)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-  const maxValue = Math.max(...revenueData.flatMap((d) => [d.free, d.business, d.custom]));
+  // Fetch revenue data
+  useEffect(() => {
+    async function fetchRevenueData() {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/analytics/revenue');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch analytics data');
+        }
+        
+        const data = await response.json();
+        
+        const transformedData = data.map((item: any) => ({
+          month: item.month,
+          free: parseFloat(item.freePlanRevenue) || 0,
+          business: parseFloat(item.businessPlanRevenue) || 0,
+          custom: parseFloat(item.customPlanRevenue) || 0
+        }));
+        
+        setRevenueData(transformedData);
+      } catch (err) {
+        console.error('Error fetching revenue data:', err);
+        setError('Could not load revenue data');
+        
+        // Fallback to sample data if API fails
+        setRevenueData([
+          { month: "Jan", free: 1000, business: 2000, custom: 3000 },
+          { month: "Feb", free: 1200, business: 2200, custom: 3200 },
+          { month: "Mar", free: 1100, business: 2400, custom: 3400 },
+          { month: "Apr", free: 1300, business: 2600, custom: 3600 },
+          { month: "May", free: 1400, business: 2800, custom: 3800 },
+          { month: "Jun", free: 1600, business: 3000, custom: 4000 },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchRevenueData();
+  }, []);
+
+  // Calculate maximum value - only when we have data
+  const maxValue = revenueData.length
+    ? Math.max(...revenueData.flatMap((d) => [d.free, d.business, d.custom]))
+    : 4000; // Default if no data
 
   const getTooltipPosition = (x: number, y: number) => {
     const isNearRight = x > 800;
@@ -40,6 +85,44 @@ export default function RevenueInsights() {
     };
   };
 
+  if (isLoading) return <div className="bg-white rounded-lg p-4 md:p-6 h-[300px] flex items-center justify-center">Loading revenue data...</div>;
+  
+  if (error) return <div className="bg-white rounded-lg p-4 md:p-6 h-[300px] flex items-center justify-center text-red-500">{error}</div>;
+
+  // Only render the chart on client side to avoid hydration errors
+  if (!isClient) {
+    return (
+      <div className="bg-white rounded-lg p-4 md:p-6">
+        <h2 className="text-lg font-semibold text-[#151d48] mb-4">Revenue Insights</h2>
+        <div className="h-[200px] md:h-[250px] flex items-center justify-center">
+          Loading chart...
+        </div>
+        <div className="grid grid-cols-6 mt-2">
+          {months.map((month) => (
+            <div key={month} className="text-[10px] text-[#737791] text-center">
+              {month}
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center justify-between mt-4">
+          <div className="flex items-center gap-2 mr-4 mb-2">
+            <div className="w-3 h-3 rounded-full bg-[#ffa412]"></div>
+            <span className="text-xs text-[#737791]">Free</span>
+          </div>
+          <div className="flex items-center gap-2 mr-4 mb-2">
+            <div className="w-3 h-3 rounded-full bg-[#00e096]"></div>
+            <span className="text-xs text-[#737791]">Business Plan</span>
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-3 h-3 rounded-full bg-[#5d5fef]"></div>
+            <span className="text-xs text-[#737791]">Customized Solution</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Full client-side rendered chart
   return (
     <div className="bg-white rounded-lg p-4 md:p-6">
       <h2 className="text-lg font-semibold text-[#151d48] mb-4">Revenue Insights</h2>
@@ -71,7 +154,7 @@ export default function RevenueInsights() {
             {/* Free Plan */}
             <path
               d={revenueData
-                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - (d.free / maxValue) * 400}`)
+                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - ((d.free / maxValue) * 400).toFixed(2)}`)
                 .join(" ")}
               fill="none"
               stroke="#ffa412"
@@ -81,14 +164,19 @@ export default function RevenueInsights() {
               <circle
                 key={`free-${i}`}
                 cx={i * (1000 / 5)}
-                cy={400 - (d.free / maxValue) * 400}
+                cy={400 - ((d.free / maxValue) * 400).toFixed(2)}
                 r="6"
                 fill="#ffa412"
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer hover:r-8 transition-all"
                 onMouseEnter={() =>
-                  setHoveredPoint({ ...d, type: "Free", x: i * (1000 / 5), y: 400 - (d.free / maxValue) * 400 })
+                  setHoveredPoint({ 
+                    ...d, 
+                    type: "Free", 
+                    x: i * (1000 / 5), 
+                    y: 400 - ((d.free / maxValue) * 400).toFixed(2)
+                  })
                 }
                 onMouseLeave={() => setHoveredPoint(null)}
               />
@@ -97,7 +185,7 @@ export default function RevenueInsights() {
             {/* Business Plan */}
             <path
               d={revenueData
-                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - (d.business / maxValue) * 400}`)
+                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - ((d.business / maxValue) * 400).toFixed(2)}`)
                 .join(" ")}
               fill="none"
               stroke="#00e096"
@@ -107,7 +195,7 @@ export default function RevenueInsights() {
               <circle
                 key={`business-${i}`}
                 cx={i * (1000 / 5)}
-                cy={400 - (d.business / maxValue) * 400}
+                cy={400 - ((d.business / maxValue) * 400).toFixed(2)}
                 r="6"
                 fill="#00e096"
                 stroke="#fff"
@@ -118,7 +206,7 @@ export default function RevenueInsights() {
                     ...d,
                     type: "Business",
                     x: i * (1000 / 5),
-                    y: 400 - (d.business / maxValue) * 400,
+                    y: 400 - ((d.business / maxValue) * 400).toFixed(2),
                   })
                 }
                 onMouseLeave={() => setHoveredPoint(null)}
@@ -128,7 +216,7 @@ export default function RevenueInsights() {
             {/* Customized Solution */}
             <path
               d={revenueData
-                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - (d.custom / maxValue) * 400}`)
+                .map((d, i) => `${i === 0 ? "M" : "L"} ${i * (1000 / 5)} ${400 - ((d.custom / maxValue) * 400).toFixed(2)}`)
                 .join(" ")}
               fill="none"
               stroke="#5d5fef"
@@ -138,14 +226,19 @@ export default function RevenueInsights() {
               <circle
                 key={`custom-${i}`}
                 cx={i * (1000 / 5)}
-                cy={400 - (d.custom / maxValue) * 400}
+                cy={400 - ((d.custom / maxValue) * 400).toFixed(2)}
                 r="6"
                 fill="#5d5fef"
                 stroke="#fff"
                 strokeWidth="2"
                 className="cursor-pointer hover:r-8 transition-all"
                 onMouseEnter={() =>
-                  setHoveredPoint({ ...d, type: "Custom", x: i * (1000 / 5), y: 400 - (d.custom / maxValue) * 400 })
+                  setHoveredPoint({ 
+                    ...d, 
+                    type: "Custom", 
+                    x: i * (1000 / 5), 
+                    y: 400 - ((d.custom / maxValue) * 400).toFixed(2)
+                  })
                 }
                 onMouseLeave={() => setHoveredPoint(null)}
               />
@@ -220,6 +313,5 @@ export default function RevenueInsights() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

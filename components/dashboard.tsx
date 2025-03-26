@@ -2,14 +2,11 @@
 import Sidebar from "@/components/sidebar"
 import Header from "@/components/header"
 import TodaySales from "@/components/today-sales"
-import EngagementRate from "@/components/EngagementRate"
 import ActiveUsers from "@/components/active-users"
 import UserAcquisition from "./user-acquisition"
-import UserSegmentation from "@/components/user-segmentation"
 import DeviceUsers from "./device-users"
 import MostViewedPages from "@/components/most-viewed-pages"
 import GeoUsers from "./geo-users"
-// import RevenueInsights from "@/components/revenue-insights" // Comment out or remove
 
 export default function Dashboard() {
   return (
@@ -21,23 +18,23 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-[#151d48] mb-6">Overview</h1>
 
           <div className="grid gap-6">
+            {/* TodaySales at the top (full width) */}
             <TodaySales />
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <EngagementRate />
-              <MostViewedPages /> {/* Replace RevenueInsights with MostViewedPages */}
-            </div>
-
+            {/* ActiveUsers and UserAcquisition in the second row */}
             <div className="grid md:grid-cols-2 gap-6">
               <ActiveUsers />
               <UserAcquisition />
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <UserSegmentation />
+            {/* GeoUsers and DeviceUsers in the third row */}
+            <div className="grid md:grid-cols-2 gap-6">
               <GeoUsers />
               <DeviceUsers />
             </div>
+
+            {/* MostViewedPages at the bottom (full width) */}
+            <MostViewedPages />
           </div>
         </main>
       </div>
