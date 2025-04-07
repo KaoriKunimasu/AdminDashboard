@@ -118,9 +118,7 @@ export default function TodaySales() {
           <h2 className="text-lg font-semibold text-[#151d48]">Today&apos;s Analytics</h2>
           <p className="text-sm text-[#737791]">Performance Metrics</p>
         </div>
-        <button className="mt-2 sm:mt-0 px-3 py-1.5 border border-gray-200 rounded-md text-sm text-[#151d48]">
-          Export
-        </button>
+
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

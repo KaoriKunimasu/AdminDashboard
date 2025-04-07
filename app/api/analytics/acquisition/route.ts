@@ -27,7 +27,6 @@ const sourceColors: { [key: string]: string } = {
 
 export async function GET() {
   try {
-    console.log("Fetching acquisition data from Google Analytics...");
     
     // Get and validate environment variables
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
@@ -36,7 +35,6 @@ export async function GET() {
     const propertyId = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
 
     if (!clientEmail || !privateKey || !projectId || !propertyId) {
-      console.error("Missing environment variables");
       throw new Error("Missing required environment variables");
     }
 
@@ -64,7 +62,6 @@ export async function GET() {
       auth,
     });
 
-    console.log("Making request to Google Analytics API...");
     
     // Create the property parameter in the correct format
     const propertyParam = `properties/${propertyId}`;
