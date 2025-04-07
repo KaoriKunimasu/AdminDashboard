@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 import { google } from "googleapis";
-import { GaxiosResponse } from 'gaxios';
 import { analyticsdata_v1beta } from 'googleapis';
 import dotenv from "dotenv";
 
-type Schema$RunReportResponse = analyticsdata_v1beta.Schema$RunReportResponse;
 
 dotenv.config();
 
