@@ -25,8 +25,6 @@ const sourceColors: { [key: string]: string } = {
 
 export async function GET() {
   try {
-    
-    // Get and validate environment variables
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const projectId = process.env.GOOGLE_PROJECT_ID;
@@ -36,14 +34,6 @@ export async function GET() {
       throw new Error("Missing required environment variables");
     }
 
-    console.log("Credential validation:", {
-      clientEmail: clientEmail.substring(0, 5) + "..." + clientEmail.substring(clientEmail.length - 5),
-      privateKeyLength: privateKey.length,
-      projectId: projectId,
-      propertyId: propertyId
-    });
-
-    // Create auth client
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: clientEmail,
@@ -54,23 +44,18 @@ export async function GET() {
       scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
     });
 
-    // Initialize the Analytics Data API client
     const analyticsData = google.analyticsdata({
       version: "v1beta",
       auth,
     });
-
     
-    // Create the property parameter in the correct format
     const propertyParam = `properties/${propertyId}`;
-    console.log("Using property parameter:", propertyParam);
     
     let response;
 
-    // Try first with sessionDefaultChannelGroup
     try {
       response = await analyticsData.properties.runReport({
-        property: propertyParam, // CORRECTED: Use 'property' instead of 'name'
+        property: propertyParam,
         requestBody: {
           dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
           dimensions: [{ name: "sessionDefaultChannelGroup" }],
@@ -85,18 +70,12 @@ export async function GET() {
         },
       });
       
-      console.log("GA API Response status:", response.status);
-      
-      // If no data, throw to try the fallback
       if (!response.data.rows || response.data.rows.length === 0) {
         throw new Error("No rows returned from sessionDefaultChannelGroup");
       }
     } catch (channelError) {
-      console.log("Falling back to sessionSource dimension:", channelError.message);
-      
-      // Fall back to sessionSource
       response = await analyticsData.properties.runReport({
-        property: propertyParam, // CORRECTED: Use 'property' instead of 'name'
+        property: propertyParam,
         requestBody: {
           dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
           dimensions: [{ name: "sessionSource" }],
@@ -110,31 +89,22 @@ export async function GET() {
           limit: 6
         },
       });
-      
-      console.log("Fallback GA API Response status:", response.status);
     }
 
     const { data } = response;
-    console.log("Response data received:", !!data);
-    
     let sources: AcquisitionData[] = [];
     let totalUsers = 0;
 
     if (data?.rows && data.rows.length > 0) {
-      console.log("Processing GA data rows:", data.rows.length);
-      
-      // Calculate total users
       totalUsers = data.rows.reduce((sum, row) => {
         return sum + parseInt(row.metricValues?.[0]?.value || '0');
       }, 0);
 
-      // Process each source
       sources = data.rows.map(row => {
         const source = row.dimensionValues?.[0]?.value || '(other)';
         const users = parseInt(row.metricValues?.[0]?.value || '0');
         const percentage = totalUsers > 0 ? (users / totalUsers) * 100 : 0;
 
-        // Format source name
         const formattedSource = source
           .split('_')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
@@ -147,17 +117,11 @@ export async function GET() {
           color: sourceColors[source.toLowerCase()] || sourceColors['(other)']
         };
       });
-      
-      console.log("Processed sources count:", sources.length);
-    } else {
-      console.log("No rows returned from Google Analytics API");
     }
 
     return NextResponse.json({ sources });
   } catch (error: any) {
     console.error("Error fetching acquisition data:", error);
-    console.error("Error stack:", error.stack);
-    
     return NextResponse.json(
       { 
         error: 'Failed to fetch acquisition data', 

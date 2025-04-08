@@ -14,19 +14,14 @@ interface DeviceData {
 
 export async function GET() {
   try {
-    console.log("Fetching device data from Google Analytics...");
-    
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const projectId = process.env.GOOGLE_PROJECT_ID;
     const propertyId = process.env.GOOGLE_ANALYTICS_PROPERTY_ID;
 
     if (!clientEmail || !privateKey || !projectId || !propertyId) {
-      console.error("Missing environment variables");
       throw new Error("Missing required environment variables");
     }
-
-    console.log("Credentials validated for device analytics");
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
@@ -42,15 +37,11 @@ export async function GET() {
       version: "v1beta",
       auth,
     });
-
-    console.log("Making request to Google Analytics API for device data...");
     
-    // Create the property parameter in the correct format
     const propertyParam = `properties/${propertyId}`;
     
-    // CRITICAL FIX: Change 'parent' to 'property' in the API request
     const response = await analyticsData.properties.runReport({
-      property: propertyParam, // FIXED: Changed from 'parent' to 'property'
+      property: propertyParam,
       requestBody: {
         dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
         dimensions: [{ name: "deviceCategory" }],
@@ -64,27 +55,20 @@ export async function GET() {
       },
     });
 
-    console.log("Device data response received, status:", response.status);
-
     const { data } = response;
     let devices: DeviceData[] = [];
     let totalUsers = 0;
 
     if (data?.rows && data.rows.length > 0) {
-      console.log("Processing device data rows:", data.rows.length);
-      
-      // Calculate total users
       totalUsers = data.rows.reduce((sum, row) => {
         return sum + parseInt(row.metricValues?.[0]?.value || '0');
       }, 0);
 
-      // Process each device category
       devices = data.rows.map(row => {
         const device = row.dimensionValues?.[0]?.value?.toLowerCase() || 'other';
         const users = parseInt(row.metricValues?.[0]?.value || '0');
         const percentage = totalUsers > 0 ? Math.round((users / totalUsers) * 100) : 0;
 
-        // Map to one of the three expected device types if needed
         let normalizedDevice = device;
         if (!['desktop', 'mobile', 'tablet'].includes(device)) {
           if (device.includes('phone') || device.includes('mobile')) {
@@ -92,24 +76,19 @@ export async function GET() {
           } else if (device.includes('tablet')) {
             normalizedDevice = 'tablet';
           } else {
-            normalizedDevice = 'desktop'; // Default
+            normalizedDevice = 'desktop';
           }
         }
 
         return { device: normalizedDevice, users, percentage };
       });
-      
-      console.log("Processed device data:", devices);
     } else {
-      console.log("No device data rows returned, trying alternative dimension");
-      
-      // Try alternative dimension if deviceCategory doesn't work
       try {
         const altResponse = await analyticsData.properties.runReport({
           property: propertyParam,
           requestBody: {
             dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
-            dimensions: [{ name: "device" }],  // Alternative dimension
+            dimensions: [{ name: "device" }],
             metrics: [{ name: "totalUsers" }],
             orderBys: [
               {
@@ -123,9 +102,6 @@ export async function GET() {
         const altData = altResponse.data;
         
         if (altData?.rows && altData.rows.length > 0) {
-          console.log("Processing alternative device data");
-          
-          // Group by device categories
           const deviceCounts = {
             mobile: 0,
             desktop: 0,
@@ -147,7 +123,6 @@ export async function GET() {
           
           totalUsers = Object.values(deviceCounts).reduce((sum, count) => sum + count, 0);
           
-          // Convert to array format
           devices = Object.entries(deviceCounts)
             .filter(([_, count]) => count > 0)
             .map(([device, users]) => {
@@ -163,7 +138,6 @@ export async function GET() {
     return NextResponse.json({ devices });
   } catch (error: any) {
     console.error("Error fetching device data:", error);
-    
     return NextResponse.json(
       { error: 'Failed to fetch device data', message: error.message },
       { status: 500 }

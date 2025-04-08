@@ -17,10 +17,6 @@ interface PageData {
 
 export async function GET() {
   try {
-    // Log to verify endpoint is being called
-    console.log("Pages API endpoint called");
-    
-    // Get credentials from environment variables
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const projectId = process.env.GOOGLE_PROJECT_ID;
@@ -34,31 +30,22 @@ export async function GET() {
     if (!propertyId) {
       throw new Error("GOOGLE_ANALYTICS_PROPERTY_ID is not set in .env");
     }
-
-    console.log("Creating auth with credentials from environment variables");
     
-    // Create auth directly from environment variables
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: clientEmail,
-        private_key: privateKey.replace(/\\n/g, '\n'),  // Fix newlines if needed
+        private_key: privateKey.replace(/\\n/g, '\n'),
         project_id: projectId,
         type: "service_account"
       },
       scopes: ["https://www.googleapis.com/auth/analytics.readonly"],
     });
-    
-    console.log("Auth created successfully");
 
     const analyticsData = google.analyticsdata({
       version: "v1beta",
       auth,
     });
-
-    console.log("Property ID:", propertyId);
-    console.log("Fetching page view data from GA4...");
     
-    // Fetch page view data
     const response = (await analyticsData.properties.runReport({
       property: `properties/${propertyId}`,
       requestBody: {
@@ -80,22 +67,15 @@ export async function GET() {
 
     const { data } = response;
 
-    console.log("GA4 API call successful");
-
-    // Process the data
     const pages: PageData[] = [];
     let totalPageviews = 0;
 
     if (data && data.rows) {
-      console.log(`Found ${data.rows.length} rows of page data`);
-      
       // Calculate total pageviews for percentage calculation
       data.rows.forEach(row => {
         const pageviews = parseInt(row.metricValues?.[0]?.value || '0');
         totalPageviews += pageviews;
       });
-
-      console.log(`Total pageviews: ${totalPageviews}`);
       
       // Process each page
       data.rows.forEach(row => {
@@ -111,9 +91,6 @@ export async function GET() {
         });
       });
     } else {
-      console.log("No rows found in GA4 response or unexpected response structure");
-      console.log("Response data:", JSON.stringify(data, null, 2));
-      
       // Return fallback data if no real data is available
       return NextResponse.json({
         pages: [
@@ -126,12 +103,10 @@ export async function GET() {
       });
     }
 
-    console.log(`Processed ${pages.length} pages`);
     return NextResponse.json({ pages });
     
   } catch (error: any) {
     console.error('API route error:', error);
-    console.error('Error details:', error.message);
     
     // Return fallback data in case of error in development mode
     if (process.env.NODE_ENV === 'development') {
@@ -143,16 +118,14 @@ export async function GET() {
           { pagePath: "/contact", pageTitle: "Contact", pageviews: 320, percentage: 9 },
           { pagePath: "/blog/top-tips", pageTitle: "Top Tips", pageviews: 280, percentage: 8 }
         ],
-        error: error.message,
-        stack: error.stack
+        error: error.message
       });
     }
     
     return NextResponse.json(
       { 
         error: 'Failed to fetch page view data', 
-        message: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        message: error.message
       },
       { status: 500 }
     );

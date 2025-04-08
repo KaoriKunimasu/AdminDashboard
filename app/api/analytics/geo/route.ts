@@ -17,8 +17,6 @@ interface GeoData {
 
 export async function GET() {
   try {
-    console.log("Fetching geographical data from Google Analytics...");
-    
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
     const privateKey = process.env.GOOGLE_PRIVATE_KEY;
     const projectId = process.env.GOOGLE_PROJECT_ID;
@@ -66,12 +64,10 @@ export async function GET() {
     let totalUsers = 0;
 
     if (data?.rows) {
-      // Calculate total users
       totalUsers = data.rows.reduce((sum, row) => {
         return sum + parseInt(row.metricValues?.[0]?.value || '0');
       }, 0);
 
-      // Process each country
       countries = data.rows.map(row => {
         const country = row.dimensionValues?.[0]?.value || 'Unknown';
         const countryCode = row.dimensionValues?.[1]?.value || '';
