@@ -6,241 +6,213 @@ A comprehensive analytics and management dashboard designed for real-time monito
 
 This Admin Dashboard offers a complete solution for businesses to monitor their digital presence through an intuitive interface. The system aggregates data across multiple dimensions including user activity, session analytics, engagement rates, acquisition channels, device usage, and geographical sales distribution. It's designed to provide actionable insights through clean, easily digestible visualizations and metrics.
 
+
+## 🔧 Technologies Used
+
+- **Framework:** [Next.js](https://nextjs.org/) with App Router
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Linting:** [ESLint](https://eslint.org/) via `eslint.config.mjs`
+
+## ✅ Suggestions for README Improvement
+
+- Include this folder structure in your `README.md` to help contributors understand the layout.
+- Briefly describe the purpose of each main directory and configuration file.
+- Optionally, include setup steps and usage examples.
+
+Let me know if you'd like this integrated directly into the existing README file or formatted for presentation.
+
+
 ## Features
 
 **Core Analytics:**
-- Total user tracking with active/inactive status monitoring
-- Session duration analytics with average time calculations
-- Real-time engagement rate calculations and trend analysis
-- Interactive user activity graphs with historical comparison
-- Comprehensive user acquisition channel breakdown
+
+* Total user tracking with active/inactive status monitoring (19 total users)
+* Session duration analytics with average time calculations (2:56 average)
+* Real-time engagement rate calculations and trend analysis (52.0%)
+* Interactive user activity graphs with historical comparison
+* Comprehensive user acquisition channel breakdown (Direct: 35 users, Organic: 13 users)
 
 **User Insights:**
-- Active users tracking with trend visualization
-- Historical comparison capabilities for identifying patterns
-- User acquisition source attribution (direct, organic search, etc.)
-- Detailed segmentation of traffic sources with percentage breakdowns
-- User interaction metrics including bounce rates and session quality
+
+* Active users tracking with trend visualization (18 active users)
+* Historical comparison capabilities for identifying patterns
+* User acquisition source attribution (direct, organic search, unassigned)
+* Detailed segmentation of traffic sources with percentage breakdowns
+* User interaction metrics including engagement rates
 
 **Sales & Geographic Analysis:**
-- Country-based sales mapping with visual representations
-- Percentage-based geographical distribution analysis
-- Top countries ranking by sales volume
-- Regional performance comparison
-- Market penetration visualization
+
+* Country-based sales mapping with visual representations
+* Percentage-based geographical distribution analysis
+* Top countries ranking by sales volume (United States: 28.6%, India: 17.9%, New Zealand: 16.1%)
+* Regional performance comparison
+* Market penetration visualization
 
 **Device & Platform Analytics:**
-- Device category breakdown (desktop vs. mobile)
-- Cross-platform usage analysis
-- Device-specific engagement metrics
-- Operating system and browser distribution (if applicable)
+
+* Device category breakdown (desktop vs. mobile)
+* Cross-platform usage analysis
+* Device-specific engagement metrics
+* User distribution across device types
 
 **Content Performance:**
-- Most viewed pages tracking
-- Content engagement analytics
-- Page performance metrics
-- View count statistics with trend indicators
-- Content effectiveness measurements
+
+* Most viewed pages tracking
+* Content engagement analytics
+* Page performance metrics (Dashboard: 63 views, Products: 47 views, Login page: 40 views)
+* View count statistics with trend indicators
 
 **Dashboard Functionality:**
-- Clean, intuitive user interface
-- Real-time data updates
-- Customizable time period selection
-- Export capabilities for reports
-- Role-based access control
 
-## Technology Stack
-
-- Frontend: [Specify framework/library - e.g., React, Vue, Angular]
-- Charts & Visualizations: [Specify library - e.g., D3.js, Chart.js, Highcharts]
-- Styling: [Specify approach - e.g., CSS, SCSS, Styled Components]
-- Backend: [Specify technology - e.g., Node.js, Python/Django, Ruby on Rails]
-- Database: [Specify database - e.g., MongoDB, PostgreSQL, MySQL]
-- Authentication: [Specify method - e.g., JWT, OAuth]
-- Deployment: [Specify platform - e.g., AWS, Vercel, Netlify]
+* Clean, intuitive user interface with sidebar navigation
+* Real-time data updates
+* Light/dark mode toggle
+* User management section
+* Settings and configuration options
 
 ## Installation
 
 ### Prerequisites
 
-- Node.js (v14.0.0 or higher)
-- npm (v6.0.0 or higher) or yarn (v1.22.0 or higher)
-- [Any other specific requirements]
+* Node.js (v14.0.0 or higher)
+* npm (v6.0.0 or higher) or yarn (v1.22.0 or higher)
 
 ### Setup Instructions
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/KaoriKunimasu/AdminDashboard.git
-   cd AdminDashboard
-Install dependencies:
 
-Copynpm install
+```bash
+git clone https://github.com/KaoriKunimasu/AdminDashboard.git
+cd AdminDashboard
+```
+
+2. **Install dependencies:**
+
+```bash
+npm install
 # or
 yarn install
-Environment configuration: Create a .env file in the root directory with the following variables:
+```
 
-API_URL=your_api_url
-AUTH_SECRET=your_auth_secret
-DATABASE_URL=your_database_connection_string
-PORT=3000
-Database setup:
+3. **Start the development server:**
 
-Copynpm run db:setup
-# or
-yarn db:setup
-Build the application:
-
-Copynpm run build
-# or
-yarn build
-Usage
-Starting the Application
-Copynpm run start
+```bash
+npm start
 # or
 yarn start
-The dashboard will be available at http://localhost:3000 (or your configured port).
+```
 
-Authentication
-Default admin credentials:
+4. **Build for production:**
 
-Username: admin
-Password: [Specify default password or instructions to set it]
-User access levels:
+```bash
+npm run build
+# or
+yarn build
+```
 
-Admin: Full access to all dashboard features
-Manager: Access to analytics and reports without configuration capabilities
-Viewer: Read-only access to dashboard data
-Dashboard Navigation
+## Usage
+
+### Dashboard Navigation
+
 The main dashboard is divided into several sections:
 
-Overview Panel: Displays summary metrics including total users, active users, session duration, and engagement rate.
+1. **Overview Panel**: Displays summary metrics including total users, active users, session duration, and engagement rate.
 
-User Activity Section: Shows the active users graph with historical data and trend analysis.
+2. **User Activity Section**: Shows the active users graph with historical data and trend analysis, displaying fluctuations over time.
 
-User Acquisition Panel: Breaks down how users are finding your platform with percentage distributions.
+3. **User Acquisition Panel**: Breaks down how users are finding your platform with percentage distributions across direct, organic search, and unassigned sources.
 
-Sales Mapping Area: Visualizes geographical sales distribution with country-specific metrics.
+4. **Sales Mapping Area**: Visualizes geographical sales distribution with country-specific metrics, with United States leading at 28.6% of sales.
 
-Device Category Section: Shows the distribution of users by device type.
+5. **Device Category Section**: Shows the distribution of users by device type (mobile vs. desktop) in a pie chart visualization.
 
-Most Viewed Pages: Lists top-performing content by view counts.
+6. **Most Viewed Pages**: Lists top-performing content by view counts, with Dashboard, Products, and Login pages being the most popular.
 
-Customization Options
-Time Range Selection: Filter data by custom date ranges
-Data Export: Export reports as CSV, PDF, or Excel files
-Dashboard Layout: Customize the arrangement of dashboard components
-Alert Configuration: Set up custom alerts for specific metric thresholds
-API Documentation
-Internal API Endpoints
-The dashboard communicates with the following internal endpoints:
+### Left Sidebar Navigation
 
-GET /api/users - Retrieve user statistics
-GET /api/analytics - Fetch general analytics data
-GET /api/sales - Get sales distribution by country
-GET /api/content - Retrieve content performance metrics
-External Data Integration
-To connect external data sources:
+The dashboard includes a sidebar with the following options:
 
-Configure API keys in the .env file
-Use the integration manager at /admin/integrations
-Follow the connection wizard for your specific data source
-Project Structure
+* Dashboard (main view)
+* User Management
+* Change Password
+* SEO
+* Settings
+* Subaccount Users
+* Logout
+
+# AdminDashboard – Project Structure Overview
+
+This project uses **Next.js** with the App Router structure, **TypeScript**, and **Tailwind CSS** for styling. 
+
+
+
+```
 AdminDashboard/
-├── public/               # Static files
-├── src/                  # Source files
-│   ├── assets/           # Images, fonts, etc.
-│   ├── components/       # Reusable UI components
-│   │   ├── charts/       # Chart components
-│   │   ├── dashboard/    # Dashboard-specific components
-│   │   └── shared/       # Shared UI elements
-│   ├── config/           # Configuration files
-│   ├── contexts/         # React contexts
-│   ├── hooks/            # Custom hooks
-│   ├── layouts/          # Page layouts
-│   ├── pages/            # Page components
-│   ├── services/         # API services
-│   ├── store/            # State management
-│   ├── styles/           # Global styles
-│   ├── types/            # TypeScript type definitions
-│   └── utils/            # Utility functions
-├── server/               # Backend code (if applicable)
-├── .env.example          # Example environment variables
-├── package.json          # Dependencies and scripts
-└── README.md             # Project documentation
-Configuration
-Theme Customization
-Modify the theme settings in src/config/theme.js to change colors, typography, and layout options:
+├── app/ # Next.js App Router pages and routes
+│ ├── (admin)/ # Admin-specific routes and layouts
+│ ├── dashboard/ # Dashboard page route
+│ ├── layout.tsx # Root layout for the app
+│ └── page.tsx # Root page
+├── components/ # Reusable React components
+│ ├── analytics/ # Components for analytics panels
+│ ├── charts/ # Chart components (e.g., line, pie, bar)
+│ ├── core/ # Core layout components (e.g., sidebar)
+│ └── shared/ # Shared UI elements
+├── lib/ # Utility functions and helpers
+│ ├── constants.ts # Global constants
+│ └── utils.ts # Reusable utility functions
+├── public/ # Static assets (images, icons, etc.)
+├── styles/ # Custom styles (if any)
+├── components.json # Component mappings or exports
+├── eslint.config.mjs # ESLint configuration
+├── next.config.ts # Next.js configuration
+├── package.json # Project metadata and dependencies
+├── postcss.config.mjs # PostCSS config for Tailwind
+├── tailwind.config.ts # Tailwind CSS configuration (TypeScript)
+├── tsconfig.json # TypeScript compiler options
+└── README.md # Project documentation
+```
 
-Copy// Example theme configuration
-module.exports = {
-  colors: {
-    primary: '#3498db',
-    secondary: '#2ecc71',
-    accent: '#9b59b6',
-    background: '#f5f7fa',
-    text: '#34495e'
-  },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontSize: {
-      small: '0.875rem',
-      medium: '1rem',
-      large: '1.25rem',
-      xlarge: '1.5rem'
-    }
-  }
-}
-Data Source Configuration
-Configure data sources in src/config/dataSources.js:
+## Performance Features
 
-Copy// Example data source configuration
-module.exports = {
-  primary: {
-    endpoint: process.env.API_URL,
-    refreshInterval: 60000, // milliseconds
-    timeout: 5000
-  },
-  analytics: {
-    endpoint: process.env.ANALYTICS_API,
-    apiKey: process.env.ANALYTICS_KEY
-  }
-}
-Performance Optimization
 The dashboard implements several performance optimizations:
 
-Data caching for frequently accessed metrics
-Lazy loading of dashboard components
-Virtualized lists for large data sets
-Optimized chart rendering with throttled updates
-Code splitting to reduce initial load time
-Troubleshooting
-Common Issues
-Issue: Dashboard data isn't updating. Solution: Check your API connectivity and refresh interval settings in the configuration.
+* Data visualization with efficient rendering techniques
+* Responsive design principles for cross-device compatibility
+* Clean component architecture for maintainability
+* Intuitive user interface with clear data presentation
+* Interactive elements for data exploration
 
-Issue: Charts not rendering correctly. Solution: Verify browser compatibility and check console for errors. Try clearing browser cache.
+## Contributing
 
-Issue: Authentication failures. Solution: Reset your credentials through the account recovery process or contact the system administrator.
-
-Contributing
 Contributions to the Admin Dashboard are welcome. Please follow these steps:
 
-Fork the repository
-Create a feature branch (git checkout -b feature/amazing-feature)
-Commit your changes (git commit -m 'Add some amazing feature')
-Push to the branch (git push origin feature/amazing-feature)
-Open a Pull Request
-Development Guidelines
-Follow the established code style and naming conventions
-Add appropriate comments for complex logic
-Write unit tests for new features
-Update documentation to reflect changes
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Project Link: https://github.com/KaoriKunimasu/AdminDashboard
+### Development Guidelines
 
-Acknowledgements
-[List any libraries, resources, or individuals that contributed to the project]
-Charts.js
-React
-Material-UI
+* Follow the established code style and naming conventions
+* Add appropriate comments for complex logic
+* Write unit tests for new features
+* Update documentation to reflect changes
+
+## Contact
+
+
+Project Link: [https://github.com/KaoriKunimasu/AdminDashboard](https://github.com/KaoriKunimasu/AdminDashboard)
+
+## Acknowledgements
+
+* [React](https://reactjs.org/)
+* [Material-UI](https://mui.com/)
+* [Chart.js](https://www.chartjs.org/)
+* [React Router](https://reactrouter.com/)
+
+---
+
 Last Updated: May 2025
