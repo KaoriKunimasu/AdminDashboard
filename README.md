@@ -27,15 +27,15 @@ Let me know if you'd like this integrated directly into the existing README file
 
 **Core Analytics:**
 
-* Total user tracking with active/inactive status monitoring (19 total users)
-* Session duration analytics with average time calculations (2:56 average)
-* Real-time engagement rate calculations and trend analysis (52.0%)
+* Total user tracking with active/inactive status monitoring 
+* Session duration analytics with average time calculations 
+* Real-time engagement rate calculations and trend analysis 
 * Interactive user activity graphs with historical comparison
-* Comprehensive user acquisition channel breakdown (Direct: 35 users, Organic: 13 users)
+* Comprehensive user acquisition channel breakdown 
 
 **User Insights:**
 
-* Active users tracking with trend visualization (18 active users)
+* Active users tracking with trend visualization
 * Historical comparison capabilities for identifying patterns
 * User acquisition source attribution (direct, organic search, unassigned)
 * Detailed segmentation of traffic sources with percentage breakdowns
@@ -45,7 +45,7 @@ Let me know if you'd like this integrated directly into the existing README file
 
 * Country-based sales mapping with visual representations
 * Percentage-based geographical distribution analysis
-* Top countries ranking by sales volume (United States: 28.6%, India: 17.9%, New Zealand: 16.1%)
+* Top countries ranking by sales volume 
 * Regional performance comparison
 * Market penetration visualization
 
@@ -60,7 +60,7 @@ Let me know if you'd like this integrated directly into the existing README file
 
 * Most viewed pages tracking
 * Content engagement analytics
-* Page performance metrics (Dashboard: 63 views, Products: 47 views, Login page: 40 views)
+* Page performance metrics
 * View count statistics with trend indicators
 
 **Dashboard Functionality:**
@@ -123,7 +123,7 @@ The main dashboard is divided into several sections:
 
 3. **User Acquisition Panel**: Breaks down how users are finding your platform with percentage distributions across direct, organic search, and unassigned sources.
 
-4. **Sales Mapping Area**: Visualizes geographical sales distribution with country-specific metrics, with United States leading at 28.6% of sales.
+4. **Sales Mapping Area**: Visualizes geographical sales distribution with country-specific metrics.
 
 5. **Device Category Section**: Shows the distribution of users by device type (mobile vs. desktop) in a pie chart visualization.
 
