@@ -2,6 +2,9 @@
 
 A comprehensive analytics and management dashboard designed for real-time monitoring of user activity, engagement metrics, and sales performance. This dashboard provides a centralized interface for tracking key business metrics, user engagement patterns, and geographical sales distribution.
 
+
+> 🌐 **Live Demo**: [admindashboard.vercel.app](https://ui-admin-delta.vercel.app/)
+
 ## Overview
 
 This Admin Dashboard offers a complete solution for businesses to monitor their digital presence through an intuitive interface. The system aggregates data across multiple dimensions including user activity, session analytics, engagement rates, acquisition channels, device usage, and geographical sales distribution. It's designed to provide actionable insights through clean, easily digestible visualizations and metrics.
