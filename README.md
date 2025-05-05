@@ -1,69 +1,78 @@
-Admin Dashboard
+# Admin Dashboard
+
 A comprehensive analytics and management dashboard designed for real-time monitoring of user activity, engagement metrics, and sales performance. This dashboard provides a centralized interface for tracking key business metrics, user engagement patterns, and geographical sales distribution.
 
-Overview
+## Overview
+
 This Admin Dashboard offers a complete solution for businesses to monitor their digital presence through an intuitive interface. The system aggregates data across multiple dimensions including user activity, session analytics, engagement rates, acquisition channels, device usage, and geographical sales distribution. It's designed to provide actionable insights through clean, easily digestible visualizations and metrics.
 
-Features
-Core Analytics:
+## Features
 
-Total user tracking with active/inactive status monitoring
-Session duration analytics with average time calculations
-Real-time engagement rate calculations and trend analysis
-Interactive user activity graphs with historical comparison
-Comprehensive user acquisition channel breakdown
-User Insights:
+**Core Analytics:**
+- Total user tracking with active/inactive status monitoring
+- Session duration analytics with average time calculations
+- Real-time engagement rate calculations and trend analysis
+- Interactive user activity graphs with historical comparison
+- Comprehensive user acquisition channel breakdown
 
-Active users tracking with trend visualization
-Historical comparison capabilities for identifying patterns
-User acquisition source attribution (direct, organic search, etc.)
-Detailed segmentation of traffic sources with percentage breakdowns
-User interaction metrics including bounce rates and session quality
-Sales & Geographic Analysis:
+**User Insights:**
+- Active users tracking with trend visualization
+- Historical comparison capabilities for identifying patterns
+- User acquisition source attribution (direct, organic search, etc.)
+- Detailed segmentation of traffic sources with percentage breakdowns
+- User interaction metrics including bounce rates and session quality
 
-Country-based sales mapping with visual representations
-Percentage-based geographical distribution analysis
-Top countries ranking by sales volume
-Regional performance comparison
-Market penetration visualization
-Device & Platform Analytics:
+**Sales & Geographic Analysis:**
+- Country-based sales mapping with visual representations
+- Percentage-based geographical distribution analysis
+- Top countries ranking by sales volume
+- Regional performance comparison
+- Market penetration visualization
 
-Device category breakdown (desktop vs. mobile)
-Cross-platform usage analysis
-Device-specific engagement metrics
-Operating system and browser distribution (if applicable)
-Content Performance:
+**Device & Platform Analytics:**
+- Device category breakdown (desktop vs. mobile)
+- Cross-platform usage analysis
+- Device-specific engagement metrics
+- Operating system and browser distribution (if applicable)
 
-Most viewed pages tracking
-Content engagement analytics
-Page performance metrics
-View count statistics with trend indicators
-Content effectiveness measurements
-Dashboard Functionality:
+**Content Performance:**
+- Most viewed pages tracking
+- Content engagement analytics
+- Page performance metrics
+- View count statistics with trend indicators
+- Content effectiveness measurements
 
-Clean, intuitive user interface
-Real-time data updates
-Customizable time period selection
-Export capabilities for reports
-Role-based access control
-Technology Stack
-Frontend: [Specify framework/library - e.g., React, Vue, Angular]
-Charts & Visualizations: [Specify library - e.g., D3.js, Chart.js, Highcharts]
-Styling: [Specify approach - e.g., CSS, SCSS, Styled Components]
-Backend: [Specify technology - e.g., Node.js, Python/Django, Ruby on Rails]
-Database: [Specify database - e.g., MongoDB, PostgreSQL, MySQL]
-Authentication: [Specify method - e.g., JWT, OAuth]
-Deployment: [Specify platform - e.g., AWS, Vercel, Netlify]
-Installation
-Prerequisites
-Node.js (v14.0.0 or higher)
-npm (v6.0.0 or higher) or yarn (v1.22.0 or higher)
-[Any other specific requirements]
-Setup Instructions
-Clone the repository:
+**Dashboard Functionality:**
+- Clean, intuitive user interface
+- Real-time data updates
+- Customizable time period selection
+- Export capabilities for reports
+- Role-based access control
 
-Copygit clone https://github.com/KaoriKunimasu/AdminDashboard.git
-cd AdminDashboard
+## Technology Stack
+
+- Frontend: [Specify framework/library - e.g., React, Vue, Angular]
+- Charts & Visualizations: [Specify library - e.g., D3.js, Chart.js, Highcharts]
+- Styling: [Specify approach - e.g., CSS, SCSS, Styled Components]
+- Backend: [Specify technology - e.g., Node.js, Python/Django, Ruby on Rails]
+- Database: [Specify database - e.g., MongoDB, PostgreSQL, MySQL]
+- Authentication: [Specify method - e.g., JWT, OAuth]
+- Deployment: [Specify platform - e.g., AWS, Vercel, Netlify]
+
+## Installation
+
+### Prerequisites
+
+- Node.js (v14.0.0 or higher)
+- npm (v6.0.0 or higher) or yarn (v1.22.0 or higher)
+- [Any other specific requirements]
+
+### Setup Instructions
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/KaoriKunimasu/AdminDashboard.git
+   cd AdminDashboard
 Install dependencies:
 
 Copynpm install
@@ -226,7 +235,6 @@ Follow the established code style and naming conventions
 Add appropriate comments for complex logic
 Write unit tests for new features
 Update documentation to reflect changes
-
 
 Project Link: https://github.com/KaoriKunimasu/AdminDashboard
 
